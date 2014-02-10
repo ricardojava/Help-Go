@@ -14,9 +14,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
+import com.towel.swing.table.JTableView;
+
 import br.com.ntk.helgo.command.Correcao;
 import br.com.ntk.helgo.command.ExecutaCorrecao;
 import br.com.ntk.helpgo.bean.GridTo;
+import br.com.ntk.helpgo.controller.AggregateModel;
 import br.com.ntk.helpgo.controller.GridErros;
 import br.com.ntk.helpgo.controller.ErrosController;
 
@@ -30,6 +33,7 @@ public class ErrosUI extends JDialog {
 	private JTable table;
     private Correcao correcao;
     private static ErrosUI dialog;
+    private static int linhaErro;
 	/**
 	 * Launch the application.
 	 */
@@ -47,12 +51,13 @@ public class ErrosUI extends JDialog {
 	 * Create the dialog.
 	 */
 	public ErrosUI() {
-		GridErros gridErros = new GridErros();
+		GridErros gridErros = new GridErros();		
 		correcao = new ExecutaCorrecao();
 
 		for (GridTo bean : ErrosController.populaErros()) {
 			gridErros.addRow(bean);
 		}
+			
 		setBounds(100, 100, 524, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,8 +68,7 @@ public class ErrosUI extends JDialog {
 		scroll.setBounds(10, 11, 414, 62);
 		scroll.setViewportView(table);
 		table = new JTable(gridErros);
-		//table.setFillsViewportHeight(true);
-		//table.setCellSelectionEnabled(true);
+		
 		table.getColumnModel().getColumn(0).setPreferredWidth(400);
 		
 
@@ -73,38 +77,25 @@ public class ErrosUI extends JDialog {
 				int row = table.rowAtPoint(e.getPoint());
 				int col = table.columnAtPoint(e.getPoint());
 				
-				try {
-					if(row==1){
-					correcao.erroCinco(dialog);
-					}	
-					//JOptionPane.showMessageDialog(null," corrigindo arq vpn :"+ " " +table.getValueAt(row,col).toString());
-
+				try {				
+					linhaErro=table.rowAtPoint(e.getPoint());					
 					
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null," startVpn arq vpn :"+ " " +e1.getMessage());
 					e1.printStackTrace();
 				}
-				// JOptionPane.showMessageDialog(null," Value in the cell clicked :"+
-				// " " +table.getValueAt(row,col).toString());
+				
 				//System.out.println(" Value in the cell clicked :" + " " + table.getValueAt(row, col).toString());
 			}
 
-			//private void erroCinco() throws IOException, InterruptedException, Exception {}
 		});
-		table.setBounds(10, 11, 414, 62);
-		contentPanel.add(table);
-
+	
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 11, 488, 189);
 		contentPanel.add(panel);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		/*
-		 * scrollPane.addMouseListener(new MouseAdapter() {
-		 * 
-		 * @Override public void mouseClicked(MouseEvent e) {
-		 * System.out.println("opa"); } });
-		 */
+		
 		panel.add(scrollPane);
 
 		{
@@ -113,6 +104,27 @@ public class ErrosUI extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Confirmar");
+				okButton.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						if(linhaErro==1){
+							try {
+								correcao.erroCinco(dialog);
+								
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}	
+						}
+						
+					}
+				});
 				okButton.setActionCommand("Confirmar");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
