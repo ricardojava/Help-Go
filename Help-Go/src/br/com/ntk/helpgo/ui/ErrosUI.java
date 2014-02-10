@@ -14,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
+import br.com.ntk.helgo.command.Correcao;
+import br.com.ntk.helgo.command.ExecutaCorrecao;
 import br.com.ntk.helpgo.bean.GridTo;
 import br.com.ntk.helpgo.controller.GridErros;
 import br.com.ntk.helpgo.controller.ErrosController;
@@ -26,13 +28,14 @@ public class ErrosUI extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
-
+    private Correcao correcao;
+    private static ErrosUI dialog;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			ErrosUI dialog = new ErrosUI();
+			dialog = new ErrosUI();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -45,7 +48,7 @@ public class ErrosUI extends JDialog {
 	 */
 	public ErrosUI() {
 		GridErros gridErros = new GridErros();
-		
+		correcao = new ExecutaCorrecao();
 
 		for (GridTo bean : ErrosController.populaErros()) {
 			gridErros.addRow(bean);
@@ -72,25 +75,11 @@ public class ErrosUI extends JDialog {
 				
 				try {
 					if(row==1){
-					if(ErrosController.finishVpn()==0){
-					if(ErrosController.corrigirArqConfVpn()){
-					    ErrosController.startVpn();
-					   }else{
-						JOptionPane.showMessageDialog(null," Erro ao iniciar  vpn :"+ " " );					
-						}
-					}else{						
-						JOptionPane.showMessageDialog(null," Erro ao finalizar  vpn :"+ " " );
-					}
-					
-				    dispose();
+					correcao.erroCinco(dialog);
 					}	
 					//JOptionPane.showMessageDialog(null," corrigindo arq vpn :"+ " " +table.getValueAt(row,col).toString());
 
 					
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null," startVpn arq vpn :"+ " " +e1.getMessage());
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null," startVpn arq vpn :"+ " " +e1.getMessage());
 					e1.printStackTrace();
@@ -99,6 +88,8 @@ public class ErrosUI extends JDialog {
 				// " " +table.getValueAt(row,col).toString());
 				//System.out.println(" Value in the cell clicked :" + " " + table.getValueAt(row, col).toString());
 			}
+
+			//private void erroCinco() throws IOException, InterruptedException, Exception {}
 		});
 		table.setBounds(10, 11, 414, 62);
 		contentPanel.add(table);
