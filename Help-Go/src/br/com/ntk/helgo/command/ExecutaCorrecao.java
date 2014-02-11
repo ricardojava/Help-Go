@@ -1,9 +1,7 @@
 package br.com.ntk.helgo.command;
 
 import java.io.IOException;
-
 import javax.swing.JOptionPane;
-
 import br.com.ntk.helpgo.controller.ErrosController;
 import br.com.ntk.helpgo.ui.ErrosUI;
 
