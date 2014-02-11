@@ -140,9 +140,7 @@ public class ErrosController {
 
 	}
 
-	public static Process execultarVpn() throws IOException, InterruptedException {
-		// Process process=null;
-		int proc = 0;
+	public static Process execultarVpn() throws IOException, InterruptedException {	
 		try {
 
 			process = Runtime.getRuntime().exec("C:/Arquivos de programas/VPN/VPN Client/vpngui.exe");
