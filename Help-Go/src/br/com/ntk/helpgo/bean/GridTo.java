@@ -1,9 +1,19 @@
 package br.com.ntk.helpgo.bean;
 
+import javax.swing.JRadioButton;
+
 public class GridTo {
 	private String descricao;
 	private String status;
+	private JRadioButton button;
 	
+	
+	public JRadioButton getButton() {
+		return button;
+	}
+	public void setButton(JRadioButton button) {
+		this.button = button;
+	}
 	public String getDescricao() {
 		return descricao;
 	}

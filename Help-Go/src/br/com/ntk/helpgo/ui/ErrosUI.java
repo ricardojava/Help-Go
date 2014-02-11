@@ -107,21 +107,22 @@ public class ErrosUI extends JDialog {
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						if(linhaErro==1){
-							try {
-								correcao.erroCinco(dialog);
-								
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (InterruptedException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}	
-						}
+						try {
+						if(linhaErro==1 ||linhaErro==2){							
+								correcao.erroCinco(dialog);						
+						  }else if(linhaErro==3){
+							  correcao.erro51(dialog);
+						  }
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}	
 						
 					}
 				});

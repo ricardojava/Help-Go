@@ -12,7 +12,7 @@ import br.com.ntk.helpgo.bean.GridTo;
 public class GridErros extends AbstractTableModel{
     
    private List<GridTo> dados;
-   private String[] colunas = {"Descrição " , "Status"};
+   private String[] colunas = {"Descrição " , "Status",""};
     
    public GridErros(){
        dados = new ArrayList<GridTo>();
@@ -41,7 +41,8 @@ public class GridErros extends AbstractTableModel{
    public Object getValueAt(int linha, int coluna) {
        switch(coluna){
            case 0: return dados.get(linha).getDescricao();
-           case 1: return dados.get(linha).getStatus();          
+           case 1: return dados.get(linha).getStatus();  
+           case 2: return dados.get(linha).getButton(); 
        }  
        return null;
    }
