@@ -10,10 +10,11 @@ public class  TesteJNA {
     	try{//898
             JOptionPane.showMessageDialog(null, "1");
 //System.loadLibrary("PG_GetID");
-    		 MySharedLibrary lib2 = (MySharedLibrary) Native.loadLibrary("shell32.dll", MySharedLibrary.class);
+    	//	 MySharedLibrary lib2 = (MySharedLibrary) Native.loadLibrary("shell32.dll", MySharedLibrary.class);
     		 JOptionPane.showMessageDialog(null, "2"); 
-        MySharedLibrary lib = (MySharedLibrary) Native.loadLibrary("PG_GetID.dll", MySharedLibrary.class);
-    	//	  MySharedLibrary lib = (MySharedLibrary) Native.loadLibrary("shell32.dll", MySharedLibrary.class);
+             MySharedLibrary lib = (MySharedLibrary) Native.loadLibrary("DescHelGO.dll", MySharedLibrary.class);
+             //Native.register(System.loadLibrary("PG_GetID"));
+    	     //MySharedLibrary lib = (MySharedLibrary) Native.loadLibrary("shell32.dll", MySharedLibrary.class);
        
         String str="";
     //     JOptionPane.showMessageDialog(null, lib.PG_GetCGRId(str));
