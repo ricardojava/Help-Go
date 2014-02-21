@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import br.com.ntk.helpgo.bean.GridTo;
+import br.com.ntk.helpgo.bean.Usuario;
 
 public class ErrosController {
 	public static Process process;
@@ -16,7 +19,7 @@ public class ErrosController {
 	public static List<GridTo> populaErros() {
 		GridTo usrPwd = new GridTo();
 		usrPwd.setDescricao("Minha VPN pede usuário e senha");
-		// usrPwd.setStatus(status);
+		//usrPwd.setStatus("OK");
 		GridTo erro5 = new GridTo();
 		erro5.setDescricao("Minha VPN apresenta o erro 5");
 		GridTo erro6 = new GridTo();
@@ -43,6 +46,25 @@ public class ErrosController {
 		return Collections.unmodifiableList(erros);
 
 	}
+	
+	public static int populaStatusOk()throws IOException, InterruptedException{
+	
+		try {
+			
+			List<GridTo> erros = new ArrayList<GridTo>();
+			GridTo usrPwd = new GridTo();
+			
+			usrPwd.setStatus("OK");
+			erros.add(usrPwd);
+			
+		} catch (Exception e) {
+		
+			
+			
+		}
+	   
+		return process.waitFor();
+}	   
 
 	public static int finishProcesso() throws IOException, InterruptedException {
 		// Process process=null;
@@ -86,7 +108,7 @@ public class ErrosController {
 		return process.waitFor();
 	}
 
-	public static boolean corrigirArqConfVpn() throws Exception {
+	public static boolean corrigirArqConfVpn(TunnelingMode tunnelingMode ,Usuario usr) throws Exception {
 		File file = null;
 		PrintStream ps = null;
 		boolean geraArq = false;
@@ -111,16 +133,17 @@ public class ErrosController {
 			ps.println("ISPConnect=N");
 			ps.println("ISPPhonebook=C:\\Documents and Settings\\All Users\\Application Data\\Microsoft\\Network\\Connections\\Pbk\\rasphone.pbk");
 			ps.println("ISPCommand=");
-			ps.println("Username=");
+			ps.println("Username="+usr.getUsr());
 			ps.println("SaveUserPassword=1");
-			ps.println("UserPassword=");
+			ps.println("UserPassword="+usr.getPwd());
 			ps.println("NTDomain=");
 			ps.println("EnableBackup=1");
 			ps.println("BackupServer=200.250.108.102");
 			ps.println("EnableMSLogon=0");
 			ps.println("MSLogonType=0");
 			ps.println("!EnableNat=1");
-			ps.println("!TunnelingMode=1");
+			/*ps.println("!TunnelingMode=1");*/
+			ps.println("!TunnelingMode="+tunnelingMode.ordinal());
 			ps.println("TcpTunnelingPort=10000");
 			ps.println("GCertStore=0");
 			ps.println("CertName=");

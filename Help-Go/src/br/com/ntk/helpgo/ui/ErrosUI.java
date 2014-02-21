@@ -15,14 +15,13 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
-import com.towel.swing.table.JTableView;
-
 import br.com.ntk.helgo.command.Correcao;
 import br.com.ntk.helgo.command.ExecutaCorrecao;
+import br.com.ntk.helgo.command.Servicos;
 import br.com.ntk.helpgo.bean.GridTo;
-import br.com.ntk.helpgo.controller.AggregateModel;
-import br.com.ntk.helpgo.controller.GridErros;
+import br.com.ntk.helpgo.bean.Usuario;
 import br.com.ntk.helpgo.controller.ErrosController;
+import br.com.ntk.helpgo.controller.GridErros;
 
 public class ErrosUI extends JDialog {
 
@@ -35,7 +34,6 @@ public class ErrosUI extends JDialog {
     private Correcao correcao;
     private static ErrosUI dialog;
     private static int linhaErro,row,col;
-    JPanel panel = new JPanel();
 	/**
 	 * Launch the application.
 	 */
@@ -53,22 +51,21 @@ public class ErrosUI extends JDialog {
 	 * Create the dialog.
 	 */
 	public ErrosUI() {
-		final GridErros gridErros = new GridErros();		
+		GridErros gridErros = new GridErros();		
 		correcao = new ExecutaCorrecao();
 
 		for (GridTo bean : ErrosController.populaErros()) {
-		//	bean.setStatus("ok");
 			gridErros.addRow(bean);
 		}
 			
-		setBounds(100, 100, 524, 300);
+		setBounds(250, 200, 500, 250);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
 		JScrollPane scroll = new JScrollPane();
-		scroll.setBounds(10, 11, 414, 62);
+		scroll.setBounds(10, 11, 414, 162);
 		scroll.setViewportView(table);
 		table = new JTable(gridErros);
 		
@@ -77,8 +74,8 @@ public class ErrosUI extends JDialog {
 
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				row  = table.rowAtPoint(e.getPoint());
-				col = table.columnAtPoint(e.getPoint());
+				 row = table.rowAtPoint(e.getPoint());
+				 col = table.columnAtPoint(e.getPoint());
 				
 				try {				
 					linhaErro=table.rowAtPoint(e.getPoint());					
@@ -93,8 +90,8 @@ public class ErrosUI extends JDialog {
 
 		});
 	
-		/*JPanel panel = new JPanel();*/
-		panel.setBounds(10, 11, 488, 189);
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 11, 460, 150);
 		contentPanel.add(panel);
 
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -110,28 +107,38 @@ public class ErrosUI extends JDialog {
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						
 						try {
-							
-							Object[] options = { "Sim", "Não" };  
-							
-							table.setValueAt(table, 1, 1);
+							if(row!=7){
+													
+							Object[] options = { "Sim", "Não"}; 
 					        int i = JOptionPane.showOptionDialog(null,  
-					                "Deseja orrigir o erro "+table.getValueAt(row, col).toString()+" ?", "Saída",  
+					                "Deseja corrigir o erro "+table.getValueAt(row, col).toString()+" ?", "Correção",  
 					                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,  
 					                options, options[0]);  
-					        if (i == JOptionPane.YES_OPTION) {  
-					        	if(linhaErro==1 ||linhaErro==2){							
-									correcao.erroCinco(dialog);		
-									
-									
-							  }else if(linhaErro==3){
-								  correcao.erro51(dialog);
-							  }
-					        }  					
-							
-					        atualizaTable();
-							
+					        if (i == JOptionPane.YES_NO_OPTION) { 
+					        						        	
+					        	if(linhaErro==0){
+						//			correcao.userPass(dialog);
+							  } else if(linhaErro==1||linhaErro==2){							
+									correcao.erroSeis(dialog);						
+							  }else if(linhaErro==3 || linhaErro==4){
+								    correcao.erro51(dialog);
+							  }else if(linhaErro==5){
+								    correcao.erro412(dialog);
+							  }else if(linhaErro==6){
+								    correcao.erro433(dialog);
+							  }  
+					        	
+					        	
+					          }
+							}else if(row==7){
+								
 						
+							}
+							
+							atualizaTable();
+							
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -162,30 +169,6 @@ public class ErrosUI extends JDialog {
 			}
 		}
 	}
-
-	public JPanel getPanel() {
-		return panel;
-	}
-
-	public void setPanel(JPanel panel) {
-		this.panel = panel;
-	}
-	
-	
-	public void setValueAt(JTable aValue, int rowIndex, int columnIndex) {    
-       // Livro titulo = valores.get(row);  
-        //Vamos alterar o valor da coluna columnIndex na linha rowIndex com o valor aValue passado no parâmetro.    
-        //Note que vc poderia alterar 2 campos ao invés de um só.    
-		GridTo bean = new GridTo();
-		bean.setStatus("ok");
-		aValue.setValueAt(bean, rowIndex, columnIndex);
-		//table.getValueAt(row, col).toString()
-      //  if (columnIndex== 3) //titulo.setTitulo(aValue.toString());    
-      //  else if (columnIndex== Status) titulo.getAutor().setNome(aValue.toString());    
-    }  
-	
-	
-	
 	
 	public void atualizaTable()     
 	{     
@@ -200,8 +183,11 @@ public class ErrosUI extends JDialog {
 	        {     
 	            int selectRow = rowSM.getMinSelectionIndex();     
 	            String iten = table.getValueAt(selectRow, 0).toString();     
-	            table.setValueAt("opa", 0, 1);
-	          //  String valor = table.getCellEditor(selectRow, 0).getCellEditorValue().toString();  
+	            table.setValueAt("selectRow", selectRow, 1);
+	          //  String valor = table.getCellEditor(selectRow, 0).getCellEditorValue().toString(); 
+	            
+	            
+	            String s = table.getValueAt(selectRow, 0).toString();
 	        }     
 	        catch(Exception e)     
 	        {     
@@ -209,6 +195,6 @@ public class ErrosUI extends JDialog {
 	        }     
 	    }     
 	        
-	}  
+	}
 	
 }

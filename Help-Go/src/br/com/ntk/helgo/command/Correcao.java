@@ -10,4 +10,7 @@ public interface Correcao {
 	void erroSeis(ErrosUI errosUI) throws IOException, InterruptedException, Exception;
 	void erro51(ErrosUI errosUI) throws IOException, InterruptedException, Exception;
 	void erro56(ErrosUI errosUI) throws IOException, InterruptedException, Exception;
+	void erro412(ErrosUI errosUI) throws IOException, InterruptedException, Exception;
+	void erro433(ErrosUI errosUI) throws IOException, InterruptedException, Exception;
+	
 }
