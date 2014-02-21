@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import br.com.ntk.helgo.command.Correcao;
 import br.com.ntk.helgo.command.ExecutaCorrecao;
+import br.com.ntk.helgo.command.ServiceWeb;
 import br.com.ntk.helgo.command.Servicos;
 import br.com.ntk.helpgo.bean.GridTo;
 import br.com.ntk.helpgo.bean.Usuario;
@@ -34,6 +35,7 @@ public class ErrosUI extends JDialog {
     private Correcao correcao;
     private static ErrosUI dialog;
     private static int linhaErro,row,col;
+    
 	/**
 	 * Launch the application.
 	 */
@@ -107,7 +109,7 @@ public class ErrosUI extends JDialog {
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						
+					Servicos ser = new ServiceWeb();	
 						try {
 							if(row!=7){
 													

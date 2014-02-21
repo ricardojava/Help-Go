@@ -34,9 +34,11 @@ public class ExecutaCorrecao implements Correcao {
 	 */
 	@Override
 	public void erroSeis(ErrosUI errosUI) throws IOException, InterruptedException, Exception {
+		Servicos ser = new ServiceWeb();
+		Usuario usr =ser.getUsrPwd("898");
+		ser.sendLog("Corrigindo erro 6", "898", "JHelp&Go 1.0.0");
 		if (ErrosController.finishProcesso() == 0) {
-			Servicos ser = new ServiceWeb();
-			Usuario usr =ser.getUsrPwd("898");
+			
 			
 			if (ErrosController.corrigirArqConfVpn(TunnelingMode.PORTA_TCP,usr)) {
 				ErrosController.execultarVpn();
