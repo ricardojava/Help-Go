@@ -22,8 +22,12 @@ public class  TesteJNA {
 //System.loadLibrary("PG_GetID");
     	//	 MySharedLibrary lib2 = (MySharedLibrary) Native.loadLibrary("shell32.dll", MySharedLibrary.class);
             String srt="";
-    		 JOptionPane.showMessageDialog(null, "2"); 
-             MySharedLibrary lib = (MySharedLibrary) Native.loadLibrary("PG_GetID.dll", MySharedLibrary.class);
+    	//	 JOptionPane.showMessageDialog(null, "2"); 
+            System.setProperty("jna.library.path", "C:/Windows/System32/");
+            MySharedLibrary lib = (MySharedLibrary) Native.loadLibrary("PG_GetID.dll", MySharedLibrary.class);
+             
+             
+            
     		 
     		// MySharedLibrary lib = (MySharedLibrary) Native.loadLibrary("shell32.dll", MySharedLibrary.class);
              //Native.register(System.loadLibrary("PG_GetID"));
@@ -31,7 +35,7 @@ public class  TesteJNA {
        
          
       //  System.out.println(s1.length());
-        s1=lib.PG_GetCGRId(s1);
+   //     s1=lib.PG_GetCGRId(s1);
         JOptionPane.showMessageDialog(null,s1);
          JOptionPane.showMessageDialog(null, "3");
      //     System.out.println(lib.librarymethod());

@@ -1,7 +1,10 @@
 package br.com.ntk.helgo.command;
 
 import java.io.IOException;
+
 import javax.swing.JOptionPane;
+
+import br.com.ntk.helpgo.bean.GridTo;
 import br.com.ntk.helpgo.controller.ErrosController;
 import br.com.ntk.helpgo.ui.ErrosUI;
 
@@ -13,6 +16,7 @@ public class ExecutaCorrecao implements Correcao {
 			if (ErrosController.finishProcesso() == 0) {
 				if (ErrosController.corrigirArqConfVpn()) {
 					ErrosController.execultarVpn();
+					
 				} else {
 					JOptionPane.showMessageDialog(null, " Erro ao iniciar  vpn :" + " ");
 				}
@@ -24,7 +28,7 @@ public class ExecutaCorrecao implements Correcao {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 
-		errosUI.dispose();
+	//	errosUI.dispose();
 	}
 
 	@Override
